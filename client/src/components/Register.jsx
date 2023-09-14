@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-
+import axios from "../api/Axios";
 const Register = () => {
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
     const submitHandler = async(e) => {
         e.preventDefault();
-        console.log(username +' '+password)
+        const res = await axios.post("/auth/register",{username,password});
+        console.log(res) 
     }
   return (
     <div className="bg-blue-50 h-screen flex items-center">
