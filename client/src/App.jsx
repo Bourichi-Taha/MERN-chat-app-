@@ -1,9 +1,24 @@
+import { Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
 import Register from "./components/Register";
+import Layout from "./components/Layout";
+import RequireAuth from "./components/RequireAuth";
+import Home from "./components/Home";
 
 
 function App() {
   return (
-    <Register />
+    <Routes>
+      <Route path="/" element={<Layout/>}>
+        {/* public routes */}
+        <Route path="login" element={<Login/>} />
+        <Route path="register" element={<Register/>} />
+        {/* protected routes */}
+        <Route element={<RequireAuth/>}>
+          <Route path="home" element={<Home/>}/>
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 
