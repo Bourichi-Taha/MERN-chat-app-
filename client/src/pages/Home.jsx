@@ -4,6 +4,8 @@ import {  useNavigate } from 'react-router-dom';
 import "../assets/css/style.css"
 import Sidebar from '../components/Sidebar';
 import ChatArea from '../components/ChatArea';
+import Welcome from '../components/Welcome';
+import CreateGroups from '../components/CreateGroups';
 const Home = () => {
   const navigate = useNavigate();
   const [sendLogout,{isSuccess}] = useSendLogoutMutation();
@@ -17,8 +19,9 @@ const Home = () => {
     <div className='home-container'>
       
       <Sidebar />
-      <ChatArea />
-
+      {/* <ChatArea /> */}
+      {/* <Welcome /> */}
+      <CreateGroups/>
     </div>
   )
 }
