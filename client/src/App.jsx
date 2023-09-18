@@ -4,6 +4,7 @@ import Register from "./components/Register";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import Home from "./components/Home";
+import Public from "./components/Public";
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         {/* public routes */}
         <Route path="login" element={<Login/>} />
         <Route path="register" element={<Register/>} />
+        <Route index element={<Public/>} />
         {/* protected routes */}
         <Route element={<RequireAuth/>}>
           <Route path="home" element={<Home/>}/>

@@ -5,7 +5,7 @@ const Register = () => {
     const [password,setPassword] = useState('');
     const submitHandler = async(e) => {
         e.preventDefault();
-        const res = await axios.post("/auth/register",{username,password});
+        const res = await axios.post("/user",{username,password});
         console.log(res) 
     }
   return (

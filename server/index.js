@@ -15,7 +15,7 @@ connectDB();
 app.use(logger);
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cookieParser);
+app.use(cookieParser());
 //static files
 app.use('/',express.static(path.join(__dirname, '/public')));
 
@@ -25,9 +25,10 @@ app.use('/', require('./routes/root'));
 
 //routes
 const authRoute = require("./routes/AuthRoutes");
-
+const userRoute = require('./routes/UserRoutes');
 //using routes in the app
 app.use("/api/v1/auth",authRoute);
+app.use("/api/v1/user",userRoute);
 
 
 //not found route
@@ -48,7 +49,9 @@ app.use(errorHandler);
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('Connected to MongoDB');
-  app.listen(process.env.PORT||4040);
+  app.listen(4040,()=>{
+    console.log(`server listning on port 4040`)
+  });
   
 });
 db.on('error', err => {

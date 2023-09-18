@@ -1,47 +1,114 @@
 const User = require("../models/User");
-const Crypto = require("crypto-js");
 const JWT = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+const asyncHandler =require('express-async-handler');
 
+// @desc Login
+// @route POST /auth
+// @access Public
+const login = asyncHandler(async (req,res) => {
+    const {username,password} = req.body;
 
-//register
-const register = async (req,res) => {
-    try {
-        const newUser = new User({
-            username : req.body.username,
-            password : Crypto.AES.encrypt(req.body.password,process.env.CRYPTO_KEY).toString(),
-        });
-        const result = await newUser.save();
-        return res.status(201).json({message:"your account have been created successfully"});
-    } catch (error) {
-        return res.status(500).json(error);
+    if (!username || !password) {
+        return res.status(400).json({message:'All fields are required!'});
     }
-}
 
-const login =  async (req,res) => {
-    try {
-        //getting user by username 
-        const user = await User.findOne({username:req.body.username});
-        //checking if user  exists
-        if (user) {
-            const originalPass = Crypto.AES.decrypt(user.password,process.env.CRYPTO_KEY).toString(Crypto.enc.Utf8);
-            //checking if password is correct
-            if (originalPass === req.body.password) {
-                const jwt = JWT.sign(
-                    {user:user._doc},
-                    process.env.JSON_WEB_TOKEN_KEY,
-                    {expiresIn:"1d"}
-                );
-                const {password, ...info} = user._doc;
-                return res.status(200).json({...info,jwt});
-            } else {
-                return res.status(403).json({message:"password is incorrect"});
+    const foundUser = await User.findOne({username}).exec();
+
+    if (!foundUser || !foundUser.active) {
+        return res.status(401).json({message:'Unauthorized!'});
+    }
+
+    const match = await bcrypt.compare(password,foundUser.password);
+
+    if (!match) {
+        return res.status(401).json({message:'Unauthorized!'});
+    }
+
+    const accessToken = JWT.sign(
+        {
+            "UserInfo": {
+                "username": foundUser.username,
+                "_id": foundUser._id
             }
-        } else {
-            return res.status(401).json({message:"email doesnt exist"});
-        }
-    } catch (error) {
-        return res.status(500).json(error);
-    }
-}
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        {expiresIn: '10s'}
+    );
 
-module.exports = {login,register};
+    const refreshToken = JWT.sign(
+        {
+            "UserInfo": {
+                "username": foundUser.username,
+                "_id": foundUser._id
+            }
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        {expiresIn: '1d'}
+    );
+
+    // creating secure cookie with refresh token
+
+    res.cookie('jwt',refreshToken, {
+        httpOnly: true,//accessible only by web server
+        secure:true,//https
+        sameSite: 'none',//cross site cookie
+        maxAge: 7*24*60*60*1000//set to match refresh token life 1Day
+    });
+
+    return res.status(200).json({accessToken});
+});
+
+// @desc Refresh
+// @route GET /auth/refresh
+// @access Public
+const refresh = async (req,res) => {
+    const cookie = req.cookies
+
+    if (!cookie?.jwt) {
+        return res.status(401).json({message : 'Unauthorized!'});
+    }
+
+    const refreshToken = cookies.jwt;
+
+    JWT.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET,
+        asyncHandler(async (err,decoded) => {
+            if(err) return res.status(403).json({message: 'Forbidden!'});
+
+            const foundUser = await User.findOne({username: decoded.username}).exec();
+
+            if(!foundUser) return res.status(401).json({message: 'Unauthorized!'});
+
+            const accessToken = JWT.sign(
+                {
+                    "UserInfo": {
+                        "username": foundUser.username,
+                        "_id": foundUser._id
+                    }
+                },
+                process.env.ACCESS_TOKEN_SECRET,
+                {expiresIn: '10s'}
+            );
+
+            return res.status(200).json({accessToken});
+        })
+
+    )
+};
+
+// @desc LogOut
+// @route POST /auth/logout
+// @access Public
+const logOut = async (req,res) => {
+    const cookie = req.cookies;
+
+    if(!cookie?.jwt) return res.sendStatus(204)//no content
+
+    res.clearCookie('jwt',{httpOnly:true,sameSite: 'None', secure:true});
+
+    return res.status(200).json({messsage: 'Cookie cleared!'});
+};
+
+module.exports = {login,refresh,logOut};

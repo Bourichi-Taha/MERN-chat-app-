@@ -8,7 +8,7 @@ const loginLimiter = rateLimit({
         message: 'Too many login attempts from this IP, please try again after a 60 second pause'
     },
     handler: (req,res,next,options) => {
-        logEvents(`Too Many Requests: ${options.message.message}\t${req.method}\t${req.url}\t${req.headers.origin}`,loginErrLog.log);
+        logEvents(`Too Many Requests: ${options.message.message}\t${req.method}\t${req.url}\t${req.headers.origin}`,'loginErrLog.log');
         res.status(options.statusCode).send(options.message);
     },
     standardHeaders: true, //return rate limitinfo in the `RateLimit-*` headers

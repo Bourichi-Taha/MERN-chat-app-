@@ -2,3 +2,13 @@
 20230915	18:54:40	9a0a533b-826a-415d-a51b-ba43e0bb7cc7	Error: Not Allowed By CORS	GET	/	https://www.youtube.com
 20230915	18:54:40	aa8bfcbc-9e36-4584-a7b6-67e7cabe7472	Error: Not Allowed By CORS	GET	/	https://www.google.com
 20230915	18:55:35	5fdf80e3-22ac-4959-a33f-220b0868dcdd	Error: Not Allowed By CORS	GET	/	https://www.google.com
+20230916	19:10:05	e41ae0a7-cb49-429e-bf08-0de109a42b62	Error: Not Allowed By CORS	OPTIONS	/api/v1/auth/login	http://localhost:3000
+20230916	19:49:44	4593e40f-3b55-4eee-a517-82bdd2a365b0	ValidationError: User validation failed: password: Cast to string failed for value "Promise { <pending> }" (type Promise) at path "password"	POST	/api/v1/user	undefined
+20230916	19:52:24	e25a3fd2-f11d-4670-9184-540bc00754dd	ValidationError: User validation failed: password: Cast to string failed for value "Promise { <pending> }" (type Promise) at path "password"	POST	/api/v1/user/	undefined
+20230916	19:54:14	fbbf39ee-ed0b-4b95-a622-997bfb5ebf86	ValidationError: User validation failed: password: Cast to string failed for value "Promise { <pending> }" (type Promise) at path "password"	POST	/api/v1/user/	undefined
+20230916	19:54:41	04cd5407-b32e-4aca-8f28-7fa10b6c6567	ValidationError: User validation failed: password: Cast to string failed for value "Promise { <pending> }" (type Promise) at path "password"	POST	/api/v1/user/	undefined
+20230918	01:14:11	71d6837e-de80-469b-b173-b1d3ac022977	Error: Not Allowed By CORS	OPTIONS	/api/v1/auth/login	http://192.168.56.1:3000
+20230918	01:14:50	ffa19309-6cf7-4ba3-baf9-445a632bf0c0	Error: Not Allowed By CORS	OPTIONS	/api/v1/auth/login	http://192.168.56.1:3000
+20230918	01:16:50	dc35724b-0afc-4f9d-a0dd-abaa394e118f	ReferenceError: loginErrLog is not defined	POST	/api/v1/auth/login	http://192.168.56.1:3000
+20230918	01:16:53	f27dfd80-f478-4dcd-8064-a0c7241b8536	ReferenceError: loginErrLog is not defined	POST	/api/v1/auth/login	http://192.168.56.1:3000
+20230918	01:16:55	744ac14d-a7c6-4ee0-80b6-fdb499954608	ReferenceError: loginErrLog is not defined	POST	/api/v1/auth/login	http://192.168.56.1:3000
