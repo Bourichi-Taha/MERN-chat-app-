@@ -3,7 +3,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import Public from "./components/Public";
 
 

@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import {  useNavigate } from 'react-router-dom';
-
+import "../assets/css/style.css"
+import Sidebar from '../components/Sidebar';
+import ChatArea from '../components/ChatArea';
 const Home = () => {
   const navigate = useNavigate();
   const [sendLogout,{isSuccess}] = useSendLogoutMutation();
@@ -12,9 +14,11 @@ const Home = () => {
   },[isSuccess,navigate])
   const clickHandler = () => sendLogout()
   return (
-    <div>
-      home
-      <button onClick={clickHandler}>logout</button>
+    <div className='home-container'>
+      
+      <Sidebar />
+      <ChatArea />
+
     </div>
   )
 }
