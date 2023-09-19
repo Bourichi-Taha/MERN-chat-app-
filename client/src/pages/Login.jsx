@@ -5,7 +5,8 @@ import { setCredentials } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import logo from "../assets/images/logo.png";
 import "../assets/css/login.css";
-import { Button, TextField } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
+import usePersist from '../hooks/usePersist';
 
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
     const errRef = useRef();
     const [errMesssage, setErrMessage] = useState('');
     const navigate = useNavigate();
-
+    const [persist,setPersist] = usePersist();
     const [login, { isLoading }] = useLoginMutation();
     const dispatch = useDispatch();
     //setting focus on componenets load
@@ -43,6 +44,7 @@ const Login = () => {
     }
     const handlePasswordChange = (e) => setPassword(e.target.value);
     const handleUsernameChange = (e) => setUsername(e.target.value);
+    const handlePersistToggle = (e) => setPersist(prev=>!prev);
     let content;
     if (isLoading) {
         content = <p>loading ...</p>
@@ -59,6 +61,7 @@ const Login = () => {
                         <p>Login to your account!</p>
                         <TextField ref={userRef} type='text' label="username" variant="outlined" value={username} onChange={handleUsernameChange} />
                         <TextField type='password' label="password" variant="outlined" value={password} onChange={handlePasswordChange} />
+                        <FormControlLabel control={<Checkbox checked={persist} onChange={handlePersistToggle}  />} label="Trust this device" />
                         <Button type='submit' variant="outlined" color="secondary">Login</Button>
                         <p>don't have an account? <Link to={"/register"}>Register</Link></p>
                     </form>

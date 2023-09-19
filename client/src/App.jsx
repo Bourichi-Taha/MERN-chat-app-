@@ -5,19 +5,35 @@ import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import Home from "./pages/Home";
 import Public from "./pages/Public";
+import Welcome from "./components/Welcome";
+import ChatArea from "./components/ChatArea";
+import CreateGroups from "./components/CreateGroups";
+import OnlineUsers from "./components/OnlineUsers";
+import AvailableGroups from "./components/AvailableGroups";
+import PersistLogin from "./features/auth/PersistLogin";
 
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout/>}>
+      <Route path="/" element={<Layout />}>
         {/* public routes */}
-        <Route path="login" element={<Login/>} />
-        <Route path="register" element={<Register/>} />
-        <Route index element={<Public/>} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route index element={<Public />} />
         {/* protected routes */}
-        <Route element={<RequireAuth/>}>
-          <Route path="home" element={<Home/>}/>
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth />}>
+
+            <Route path="/" element={<Home />}>
+              <Route path="home" element={<Welcome />} />
+              <Route path="chat/:id" element={<ChatArea />} />
+              <Route path="addGroupe" element={<CreateGroups />} />
+              <Route path="onlineUsers" element={<OnlineUsers />} />
+              <Route path="groups" element={<AvailableGroups />} />
+
+            </Route>
+          </Route>
         </Route>
       </Route>
     </Routes>

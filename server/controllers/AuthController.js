@@ -66,20 +66,20 @@ const refresh = async (req,res) => {
     const cookie = req.cookies
 
     if (!cookie?.jwt) {
-        return res.status(401).json({message : 'Unauthorized!'});
+        return res.status(401).json({message : 'Unauthorized!1'});
     }
 
-    const refreshToken = cookies.jwt;
+    const refreshToken = cookie.jwt;
 
     JWT.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
         asyncHandler(async (err,decoded) => {
             if(err) return res.status(403).json({message: 'Forbidden!'});
+            console.log(decoded)
+            const foundUser = await User.findOne({username: decoded.UserInfo.username}).exec();
 
-            const foundUser = await User.findOne({username: decoded.username}).exec();
-
-            if(!foundUser) return res.status(401).json({message: 'Unauthorized!'});
+            if(!foundUser) return res.status(401).json({message: 'Unauthorized!2'});
 
             const accessToken = JWT.sign(
                 {
