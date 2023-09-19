@@ -29,7 +29,7 @@ const PersistLogin = () => {
             if (!token && persist) verifyRefreshToken()
         }
         return () => effectRan.current = true;
-
+        //eslint-disable-next-line
     }, [])
 
     let content;

@@ -11,6 +11,7 @@ import CreateGroups from "./components/CreateGroups";
 import OnlineUsers from "./components/OnlineUsers";
 import AvailableGroups from "./components/AvailableGroups";
 import PersistLogin from "./features/auth/PersistLogin";
+import Conversations from "./components/Conversations";
 
 
 function App() {
@@ -29,8 +30,9 @@ function App() {
               <Route path="home" element={<Welcome />} />
               <Route path="chat/:id" element={<ChatArea />} />
               <Route path="addGroupe" element={<CreateGroups />} />
-              <Route path="onlineUsers" element={<OnlineUsers />} />
+              <Route path="users" element={<OnlineUsers />} />
               <Route path="groups" element={<AvailableGroups />} />
+              <Route path="conversations" element={<Conversations />} />
 
             </Route>
           </Route>

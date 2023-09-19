@@ -1,7 +1,7 @@
 .home-container{
     height: 90vh;
     width: 90vw;
-    background: #f4f5f8;
+    background: var(--bg-container-scope);
     margin: auto;
     margin-top: 5vh;
     display: flex;
@@ -17,7 +17,7 @@
 }
 
 .sb-header{
-    background: white; 
+    background: var(--bg-element-scope); 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,7 +30,7 @@
 
 .sb-search{
     margin: 10px ;
-    background: white; 
+    background: var(--bg-element-scope); 
     padding: 10px 5px;
     border-radius: 20px;
     display: flex;
@@ -44,10 +44,13 @@
     outline-width: 0;
     font-size: 1.25rem;
     flex: 1;
+    background: var(--bg-element-scope);
+    color: var(--text-color);
+
 }
 
 .sb-conversations{
-    background: white; 
+    background: var(--bg-element-scope); 
     padding: 10px 5px;
     margin: 10px ;
     border-radius: 20px;
@@ -69,11 +72,18 @@
     grid-template-columns: 32px auto auto;
     grid-template-rows: auto auto;
     column-gap: 10px;
-    padding: 5px;
+    padding: 10px;
     margin: 5px;
-    border-radius: 20px;
+    border-radius: 10px;
     user-select: none;
     
+}
+.conversation-container:hover{
+    background: #d9d9d9;
+    cursor: pointer;
+}
+.conversation-container:active{
+    background: var(--bg-element-scope);
 }
 .con-icon{
     text-transform: uppercase;
@@ -97,17 +107,18 @@
     grid-area: 1/2/2/4;
     font-family: "Segoe UI", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bolder;
-    color: rgba(0, 0, 0, .54);
+    color: var(--text-color);
 }
 .con-timeStamp{
     justify-self: flex-end;
-    color: rgba(0, 0, 0, .54);
+    color: var(--text-color);
     font-family: "Segoe UI", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: .75rem;
 }
 .con-lastMessage{
     font-family: "Segoe UI", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: .75rem;
+    color: var(--text-color);
 }
 /* end of conversation avatar item styles */
 
@@ -125,9 +136,11 @@
     align-items: center;
     margin: 10px ;
     gap: 10px;
-    background: white; 
+    background: var(--bg-element-scope); 
     padding: 10px;
     border-radius: 20px;
+    box-shadow: rgba(50, 50, 93, .25) 0px 6px 12px -2px,rgba(0, 0, 0, .3) 0px 3px 7px -3px ;
+
 }
 .ca-header-left{
     display: flex;
@@ -143,12 +156,14 @@
 
 .ca-body{
     flex: 1;
-    background: white;
+    background: var(--bg-element-scope);
     padding: 10px;
     margin: 10px;
     border-radius: 20px;
     overflow-y: scroll;
     scrollbar-width: none;
+    box-shadow: rgba(50, 50, 93, .25) 0px 6px 12px -2px,rgba(0, 0, 0, .3) 0px 3px 7px -3px ;
+
 }
 
 .ca-body::-webkit-scrollbar{
@@ -158,14 +173,26 @@
 .ca-input-area{
     display: flex;
     justify-content: space-between;
-    background: white;
+    background: var(--bg-element-scope);
     padding: 10px;
     margin: 10px;
     border-radius: 20px;
+    color: var(--text-color);
+    box-shadow: rgba(50, 50, 93, .25) 0px 6px 12px -2px,rgba(0, 0, 0, .3) 0px 3px 7px -3px ;
+
 }
 
 /* message other styles */
-
+.mo-container{
+    display: grid;
+    grid-template-columns: 32px auto auto;
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    user-select: none;
+}
 .mo-content{
     background: #d9d9d9;
     padding: 10px;
@@ -221,8 +248,8 @@
     justify-content: center;
     gap: 20px;
     font-family: "Segoe UI", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: rgba(0, 0, 0, .54);
-    border-bottom: 5px solid #63d7b0;
+    color: var(--text-color);
+    border-bottom: 5px solid #4b0082;
     border-radius: 20px;
 }
 
@@ -238,11 +265,13 @@
     flex:.7;
     align-self: center;
     padding: 20px 10px;
-    margin: 10px;
-    background: white;
+    margin: 10px ;
+    background: var(--bg-element-scope);
     border-radius: 20px;
     display: flex;
     justify-content: space-between;
+    box-shadow: rgba(50, 50, 93, .25) 0px 6px 12px -2px,rgba(0, 0, 0, .3) 0px 3px 7px -3px ;
+
 }
 
 /* end of create groups styles */
@@ -256,14 +285,14 @@
 
 }
 .online-users-header{
-    background: white; 
+    background: var(--bg-element-scope); 
     display: flex;
     align-items: center;
     padding: 5px 10px ;
     margin: 10px ;
     border-radius: 20px;
     box-shadow: rgba(50, 50, 93, .25) 0px 6px 12px -2px,rgba(0, 0, 0, .3) 0px 3px 7px -3px ;
-
+    color: var(--text-color);
     font-size: 1.5rem;
 }
 
@@ -279,7 +308,8 @@
 .ou-list-item{
     display: flex;
     align-items: center;
-    background: white;
+    justify-content: space-between;
+    background: var(--bg-element-scope);
     box-shadow: rgba(50, 50, 93, .25) 0px 6px 12px -2px,rgba(0, 0, 0, .3) 0px 3px 7px -3px ;
     border-radius: 20px;
     padding: 10px ;
@@ -292,12 +322,16 @@
     cursor: pointer;
 }
 .ou-list-item:active{
-    background: white;
+    background: var(--bg-element-scope);
+}
+.ou-list-item-text{
+    display: flex;
+    align-items: center;
 }
 .ou-title{
     font-family: "Segoe UI", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bolder;
-    color: rgba(0, 0, 0, .54);
+    color: var(--text-color);
     margin-left: 10px;
 }
 .ou-icon{
@@ -318,3 +352,70 @@
     align-self: center;
 }
 /* end of online users styles */
+
+/* conversations styles */
+
+.con-sb-conversations{
+    background: var(--bg-element-scope); 
+    padding: 10px 5px;
+    margin: 10px ;
+    border-radius: 20px;
+    flex: 1;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    box-shadow: rgba(50, 50, 93, .25) 0px 6px 12px -2px,rgba(0, 0, 0, .3) 0px 3px 7px -3px ;
+
+}
+.con-sb-search{
+    margin: 10px ;
+    background: var(--bg-element-scope); 
+    padding: 10px 5px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: rgba(50, 50, 93, .25) 0px 6px 12px -2px,rgba(0, 0, 0, .3) 0px 3px 7px -3px ;
+
+}
+
+.con-sb-conversations::-webkit-scrollbar{
+    display: none;
+}
+
+/* end of conversations styles */
+
+/*  responsive  styles */
+
+@media only screen and (max-width: 680px) {
+    .sb-conversations,.sb-search{
+        display: none;
+    }
+    .sb-header{
+        flex-direction: column;
+        flex: 1;
+        width: min-content;
+    }
+    .sb-header-icons{
+        display: flex;
+        flex-direction: column;
+    }
+    .createGroups-container,.online-users-container,.welcome-container,.chatArea-container{
+        flex: 1;
+    }
+    .sidebar-container{
+        flex: 0;
+    }
+}
+@media only screen and (max-width: 424px) {
+    .home-container{
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+    }
+    .createGroups-container,.online-users-container,.welcome-container,.chatArea-container{
+        flex: 1;
+    }
+    .sidebar-container{
+        flex: 0;
+    }
+}
+/*  end of responsive  styles */

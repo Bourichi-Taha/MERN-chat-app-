@@ -6,7 +6,7 @@ import '../assets/css/style.css';
 const MessageOther = () => {
   return (
     <div className="message-other-container">
-        <div className="conversation-container">
+        <div className="mo-container">
             <p className="con-icon">O</p>
             <div className="mo-content">
                 <p className="mo-lastMessage">message</p>
