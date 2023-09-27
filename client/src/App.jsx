@@ -12,6 +12,7 @@ import OnlineUsers from "./components/OnlineUsers";
 import AvailableGroups from "./components/AvailableGroups";
 import PersistLogin from "./features/auth/PersistLogin";
 import Conversations from "./components/Conversations";
+import Chatbot from "./pages/Chatbot";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         {/* public routes */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="chatbot" element={<Chatbot />} />
         <Route index element={<Public />} />
         {/* protected routes */}
         <Route element={<PersistLogin />}>

@@ -1,12 +1,12 @@
 const JWT = require("jsonwebtoken");
 
 async function verify(req,res,next) {
-    const authHeader = req.headers.token;
+    const authHeader = req.headers.authorization;
     if (authHeader) {
         const token = authHeader.split(" ")[1];
-        
-            JWT.verify(token,process.env.JSON_WEB_TOKEN_KEY,(error,user)=>{
+            JWT.verify(token,process.env.ACCESS_TOKEN_SECRET,(error,user)=>{
                 if (error) {
+                    console.log(error)
                     return res.status(403).json("token is not valid");
                 }
                 req.user = user;

@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 
 // @ desc Get all users
-// @route GET /users
+// @route GET /user
 // @access Private
 const getAllUsers = asyncHandler(async (req,res) => {
     const users = await User.find().select('-password').lean();
@@ -49,7 +49,7 @@ const createUser = asyncHandler(async (req,res) => {
 // @route PATCH /users
 // @access Private
 const updateUser = asyncHandler(async (req,res) => {
-    
+
 })
 
 // @ desc delete a user

@@ -261,17 +261,56 @@
 
 /* create groups styles */
 
-.createGroups-container{
-    flex:.7;
-    align-self: center;
-    padding: 20px 10px;
-    margin: 10px ;
-    background: var(--bg-element-scope);
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    box-shadow: rgba(50, 50, 93, .25) 0px 6px 12px -2px,rgba(0, 0, 0, .3) 0px 3px 7px -3px ;
 
+.create-group-container{
+    flex: .7;
+    display: flex;
+    flex-direction: column;
+
+}
+.cg-header{
+    background: var(--bg-element-scope); 
+    display: flex;
+    align-items: center;
+    padding: 5px 10px ;
+    margin: 10px ;
+    border-radius: 20px;
+    box-shadow: rgba(50, 50, 93, .25) 0px 6px 12px -2px,rgba(0, 0, 0, .3) 0px 3px 7px -3px ;
+    color: var(--text-color);
+    font-size: 1.5rem;
+}
+
+.cg-list{
+    flex: 1;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    padding: 10px;
+}
+.cg-list::-webkit-scrollbar{
+    display: none;
+}
+.cg-list-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-element-scope);
+    box-shadow: rgba(50, 50, 93, .25) 0px 6px 12px -2px,rgba(0, 0, 0, .3) 0px 3px 7px -3px ;
+    border-radius: 20px;
+    padding: 10px ;
+    margin-bottom: 10px;
+    user-select: none;
+    transition: all .5s ease-in-out;
+}
+.cg-list-item:hover{
+    background: rgb(226, 226, 226);
+    cursor: pointer;
+}
+.cg-list-item:active{
+    background: var(--bg-element-scope);
+}
+.cg-list-item-text{
+    display: flex;
+    align-items: center;
 }
 
 /* end of create groups styles */
@@ -308,7 +347,6 @@
 .ou-list-item{
     display: flex;
     align-items: center;
-    justify-content: space-between;
     background: var(--bg-element-scope);
     box-shadow: rgba(50, 50, 93, .25) 0px 6px 12px -2px,rgba(0, 0, 0, .3) 0px 3px 7px -3px ;
     border-radius: 20px;
@@ -324,10 +362,7 @@
 .ou-list-item:active{
     background: var(--bg-element-scope);
 }
-.ou-list-item-text{
-    display: flex;
-    align-items: center;
-}
+
 .ou-title{
     font-family: "Segoe UI", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bolder;

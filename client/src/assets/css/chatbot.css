@@ -1,0 +1,163 @@
+.chatbot-container {
+    min-height : 100vh;
+    width      : 100vw;
+    background : white;
+    display    : flex;
+    align-items: center;
+    overflow   : scroll;
+}
+
+.cbc-left {
+    flex      : .3;
+    background: #202123;
+    height    : 100vh;
+    position  : sticky;
+    left      : 0;
+    top       : 0;
+}
+
+.cbc-right {
+    flex      : .3;
+    background: #202123;
+    height    : 100vh;
+    position  : sticky;
+    right     : 0;
+    top       : 0;
+}
+
+.cbc-main {
+    flex          : 1;
+    background    : #f7f7f8;
+    height        : 100vh;
+    display       : flex;
+    flex-direction: column;
+    align-items   : center;
+}
+
+
+.cbc-messages-container {
+    flex          : 1;
+    background    : blue;
+    width         : 100%;
+    display       : flex;
+    align-items   : center;
+    flex-direction: column;
+}
+
+.cbc-message-user {
+    width     : 100%;
+    background: #ffffff;
+    padding   : 40px 20%;
+    display   : flex;
+    gap       : 20px;
+}
+
+.cbc-mu-image {
+    box-sizing         : border-box;
+    width              : 50px;
+    height             : 50px;
+    background-position: center center;
+    background-repeat  : no-repeat;
+    background-size    : cover;
+    background-image   : url("../images/person1.jpg");
+    border-radius      : 6px;
+    box-shadow         : rgba(50, 50, 93, .25) 0px 6px 12px -2px, rgba(0, 0, 0, .3) 0px 3px 7px -3px;
+}
+
+.cbc-mb-image {
+    box-sizing         : border-box;
+    width              : 50px;
+    height             : 50px;
+    background-position: center center;
+    background-repeat  : no-repeat;
+    background-size    : cover;
+    background-image   : url("../images/bot.jpg");
+    border-radius      : 6px;
+    box-shadow         : rgba(50, 50, 93, .25) 0px 6px 12px -2px, rgba(0, 0, 0, .3) 0px 3px 7px -3px;
+}
+
+/* .cbc-mu-image{
+    height: 50px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+/* .cbc-mu-image-item {
+    height       : 50px;
+    width        : 60px;
+    border-radius: 6px;
+    object-fit   : cover;
+    position     : absolute;
+    clip         : rect(0px, 50px, 50px, 0px);
+} */
+
+.cbc-mu-text,
+.cbc-mb-text {
+    width  : 100%;
+    display: flex;
+
+}
+
+.cbc-mu-text-item,
+.cbc-mb-text-item {
+    margin     : 0;
+    text-align : justify;
+    line-height: 1.5;
+    font-size  : 16px;
+    color      : #343541;
+}
+
+
+
+.cbc-message-bot {
+    width     : 100%;
+    background: #f7f7f8;
+    padding   : 40px 20%;
+    display   : flex;
+    gap       : 20px;
+
+}
+
+.cbc-form {
+    background: #ffffff;
+    width     : 100%;
+    height    : 20vh;
+    padding: 10vh 20%;
+    position: relative;
+}
+
+.cbc-form-input-container{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 10vh;
+    width: 100%;
+    /* background: grey; */
+    /* border: 1px solid red; */
+    background: #ffffff;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    box-shadow: 0px -8px 75px 0px white;
+}
+
+.cbc-fi-item{
+    height: 10vh;
+    width: 90%;
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background: #ffffff;
+
+}
+
+
+.MuiTextField-root.cbc-fi-item-textField{
+    box-shadow: 0px 0px 15px 6px rgba(0,0,0,0.1);
+    
+}
