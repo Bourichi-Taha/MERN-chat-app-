@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 
 const chatSchema = mongoose.Schema({
     name : {
-        type : String
+        type : String,
+        default: null
+
     },
     isGroupChat : {
         type : Boolean
@@ -15,11 +17,13 @@ const chatSchema = mongoose.Schema({
     ],
     lastMessage : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "Message"
+        ref : "Message",
+        default: null
     },
     admin : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "User"
+        ref : "User",
+        default: null
     }
 },
 {

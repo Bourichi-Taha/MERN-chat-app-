@@ -57,7 +57,21 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 }
             }
         }),
+        chat: builder.query({
+            query: () => ({
+                url: '/chat',
+                method: 'GET',
+            }),
+            async onQueryStarted(args, {dispatch, queryFulfilled}) {
+                try {
+                    const {data} = await queryFulfilled;
+                    console.log(data)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }),
     })
 })
 
-export const {useLoginMutation,useSendLogoutMutation,useRefreshMutation,useRegisterQuery} = authApiSlice
+export const {useLoginMutation,useSendLogoutMutation,useRefreshMutation,useRegisterQuery,useChatQuery} = authApiSlice

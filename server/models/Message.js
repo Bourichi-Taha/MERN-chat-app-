@@ -9,8 +9,16 @@ const messageSchema = mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "Chat"
     },
+    upload : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Upload"
+    },
     content : {
         type : String,
+    },
+    type : {
+        type : String,
+        enum: ['text', 'media'] // Specify allowed values
     }
 },
 {

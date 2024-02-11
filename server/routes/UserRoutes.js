@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const userController = require('../controllers/UserController');
-const verify = require('../utils/JwtVerify');
+const verifyJWT = require('../middleware/verifyJWT');
 
 router.route('/')
 .post(userController.createUser)
-router.use(verify).route('/')
+router.use(verifyJWT).route('/')
     .get(userController.getAllUsers)
     .patch(userController.updateUser)
     .delete(userController.deleteUser)
