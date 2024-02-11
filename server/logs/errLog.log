@@ -12,3 +12,5 @@
 20230918	01:16:50	dc35724b-0afc-4f9d-a0dd-abaa394e118f	ReferenceError: loginErrLog is not defined	POST	/api/v1/auth/login	http://192.168.56.1:3000
 20230918	01:16:53	f27dfd80-f478-4dcd-8064-a0c7241b8536	ReferenceError: loginErrLog is not defined	POST	/api/v1/auth/login	http://192.168.56.1:3000
 20230918	01:16:55	744ac14d-a7c6-4ee0-80b6-fdb499954608	ReferenceError: loginErrLog is not defined	POST	/api/v1/auth/login	http://192.168.56.1:3000
+20240211	03:55:54	70368570-234e-436b-991b-d2df7f678aa3	Error: ENOENT: no such file or directory, open 'D:\projects\mern chat\server\uploads\file-1707620154363.png'	POST	/api/v1/upload	undefined
+20240211	04:10:22	e96f50d2-3eed-422c-a9c8-931a4ed7f0ea	MulterError: Unexpected field	POST	/api/v1/upload	undefined

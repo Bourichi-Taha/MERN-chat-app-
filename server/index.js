@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 //static files
 app.use('/',express.static(path.join(__dirname, '/public')));
+app.use('/uploads',express.static(path.join(__dirname, '/uploads')));
 
 app.use('/', require('./routes/root'));
 
@@ -26,9 +27,11 @@ app.use('/', require('./routes/root'));
 //routes
 const authRoute = require("./routes/AuthRoutes");
 const userRoute = require('./routes/UserRoutes');
+const uploadRoute = require('./routes/UploadRoutes');
 //using routes in the app
 app.use("/api/v1/auth",authRoute);
 app.use("/api/v1/user",userRoute);
+app.use("/api/v1/upload",uploadRoute);
 
 
 //not found route
