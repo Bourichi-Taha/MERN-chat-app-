@@ -1,6 +1,5 @@
 import React from 'react'
 import "../assets/css/chatbot.css"
-import person from "../assets/images/person1.jpg"
 import { TextField } from '@mui/material'
 const Chatbot = () => {
     return (

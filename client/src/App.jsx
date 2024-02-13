@@ -13,6 +13,7 @@ import AvailableGroups from "./components/AvailableGroups";
 import PersistLogin from "./features/auth/PersistLogin";
 import Conversations from "./components/Conversations";
 import Chatbot from "./pages/Chatbot";
+import AddFriends from "./components/AddFriends";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               <Route path="chat/:id" element={<ChatArea />} />
               <Route path="addGroupe" element={<CreateGroups />} />
               <Route path="users" element={<OnlineUsers />} />
+              <Route path="look-users" element={<AddFriends />} />
               <Route path="groups" element={<AvailableGroups />} />
               <Route path="conversations" element={<Conversations />} />
 

@@ -13,7 +13,7 @@ const CreateGroups = () => {
                 New Group
             </div>
 
-            <div className=" cg-header">
+            <div className=" cg-header" style={{padding:'13px'}}>
                 Select members below
             </div>
             <ul className="cg-list">

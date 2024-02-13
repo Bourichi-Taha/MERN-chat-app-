@@ -38,7 +38,7 @@ const createChat = asyncHandler(async (req, res) => {
         const duplicate = await Chat.findOne({ members:{$all : members}}).lean().exec();
         if (duplicate) return res.status(200).json(duplicate);
     }
-    if (!name || !members || members.length < 2) return res.status(400).json({ message: 'All fields are required!' });
+    else if (!name || !members || members.length < 2) return res.status(400).json({ message: 'All fields are required!' });
     //create and store chat
     const chat = await Chat.create({ name, isGroupChat, members, lastMessage, admin });
     if (chat) {

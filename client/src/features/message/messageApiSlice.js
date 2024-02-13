@@ -1,7 +1,7 @@
 import { apiSlice } from "../../app/api/apiSlice";
 import { setMessages } from "./messageSlice";
 
-export const authApiSlice = apiSlice.injectEndpoints({
+export const messageApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getMessages: builder.query({
             query: (chatId) => ({
@@ -29,4 +29,4 @@ export const authApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const {useGetMessagesQuery , useCreateMessageMutation} = authApiSlice
+export const {useGetMessagesQuery , useCreateMessageMutation} = messageApiSlice

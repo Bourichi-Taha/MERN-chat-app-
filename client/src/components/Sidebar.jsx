@@ -13,8 +13,7 @@ import { IconButton, useMediaQuery } from '@mui/material';
 import ConversationAvatar from './ConversationAvatar';
 import { useNavigate } from 'react-router-dom';
 import { useSendLogoutMutation } from '../features/auth/authApiSlice';
-import { useGetChatsQuery } from '../features/chat/chatApiSlice';
-
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 const Sidebar = ({chats}) => {
 
     const navigate = useNavigate();
@@ -39,6 +38,9 @@ const Sidebar = ({chats}) => {
                             <QuestionAnswerIcon />
                         </IconButton>
                     }
+                    <IconButton onClick={() => { navigate("look-users") }}>
+                        <PersonSearchIcon />
+                    </IconButton>
                     <IconButton onClick={() => { navigate("users") }}>
                         <PersonAddAltOutlinedIcon />
                     </IconButton>

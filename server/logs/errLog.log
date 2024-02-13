@@ -22,3 +22,11 @@
 20240212	23:05:12	9c4332b3-e858-4246-8e4c-4b70b509abe5	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "chat" for model "Message"	GET	/api/v1/message/[object%20Object]	http://localhost:3000
 20240212	23:51:36	c6df0f43-d316-4a2a-a364-6b2079741295	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "_id" for model "Chat"	GET	/api/v1/chat/[object%20Object]	http://localhost:3000
 20240213	00:58:33	998cbf26-4d1b-4cf2-9b0b-fa001b3031cf	TypeError: Cannot read properties of null (reading '_id')	POST	/api/v1/message	http://localhost:3000
+20240213	03:03:21	ecd67311-fa8c-4d34-a773-169576a01f20	ValidationError: Message validation failed: upload: Cast to ObjectId failed for value "{}" (type Object) at path "upload" because of "BSONError"	POST	/api/v1/message	http://localhost:3000
+20240213	03:07:20	eb3eb354-b872-4800-b1d1-67d75a1caa9a	ValidationError: Message validation failed: upload: Cast to ObjectId failed for value "{}" (type Object) at path "upload" because of "BSONError"	POST	/api/v1/message	http://localhost:3000
+20240213	08:06:06	c76ae407-4174-4265-bcbf-4638cef345a6	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Chat"	GET	/api/v1/chat/undefined	http://localhost:3000
+20240213	08:06:06	34372df1-1911-45c8-b0d9-5f90b740df73	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "chat" for model "Message"	GET	/api/v1/message/undefined	http://localhost:3000
+20240213	08:06:35	36360be3-e5b8-41ee-b89b-08f2923cbcbd	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Chat"	GET	/api/v1/chat/undefined	http://localhost:3000
+20240213	08:06:35	63156911-07d1-435a-af8b-56e8c7080fce	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "chat" for model "Message"	GET	/api/v1/message/undefined	http://localhost:3000
+20240213	08:07:44	f3a3102b-d348-4bc7-81b6-93fa01f63020	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Chat"	GET	/api/v1/chat/undefined	http://localhost:3000
+20240213	08:07:44	751d4a68-2f65-49c2-98d8-407554a72563	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "chat" for model "Message"	GET	/api/v1/message/undefined	http://localhost:3000

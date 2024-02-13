@@ -11,6 +11,7 @@ import { selectCurrentUser } from '../features/auth/authSlice';
 import { useCreateMessageMutation, useGetMessagesQuery } from '../features/message/messageApiSlice'
 import { useParams } from 'react-router-dom';
 import { useGetChatQuery } from '../features/chat/chatApiSlice';
+import UploadModal from './UploadModal';
 const ChatArea = () => {
   const chatId = useParams().id;
   const { data: chat } = useGetChatQuery({ chatId });
@@ -18,13 +19,14 @@ const ChatArea = () => {
   const { data, isLoading } = useGetMessagesQuery(chatId);
   const [createMessage] = useCreateMessageMutation();
   const [messages, setMessages] = useState([]);
+  const [open, setOpen] = useState(false);
   const [currentMessage, setCurrentMessage] = useState('');
   const sendMessage = async (e) => {
     e.preventDefault();
     const messageObject = {
-      content : currentMessage,
-      type : 'text',
-      chat:chatId,
+      content: currentMessage,
+      type: 'text',
+      chat: chatId,
     };
     await createMessage(messageObject);
     setCurrentMessage('');
@@ -33,20 +35,41 @@ const ChatArea = () => {
     if (!isLoading) {
       setMessages(data);
     }
-  }, [chatId, isLoading,data]);
+  }, [chatId, isLoading, data]);
   const messageArea = () => {
     return (
       <div className="ca-input-area">
-              <input type="text" placeholder='Type a message ...' value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)} className='sb-search-input' />
-              <IconButton onClick={sendMessage}>
-                <SendIcon />
-              </IconButton>
-              <IconButton>
-                <AttachFileIcon />
-              </IconButton>
-            </div>
+        <input type="text" placeholder='Type a message ...' value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)} className='sb-search-input' />
+        <IconButton onClick={sendMessage}>
+          <SendIcon />
+        </IconButton>
+        <IconButton onClick={(e)=>setOpen(true)}>
+          <AttachFileIcon />
+        </IconButton>
+        <UploadModal open={open} setOpen={setOpen} chatId={chatId} />
+      </div>
     )
   }
+  const transformedMessages = messages.reduce((acc, message) => {
+    const lastMessage = acc[acc.length - 1];
+  
+    if (message.type === 'media') {
+      if (lastMessage && lastMessage.type === 'media' && lastMessage.sender === message.sender) {
+        // If the last message and the current message are both media messages from the same sender,
+        // add the current upload to the images array of the last message
+        lastMessage.upload.push(message.upload);
+      } else {
+        // If the current message is a new media message or a text message, push it to the transformed array
+        acc.push({ ...message, upload: [message.upload] });
+      }
+    } else {
+      // For text messages, simply push them to the transformed array
+      acc.push(message);
+    }
+  
+    return acc;
+  }, []);
+  
   const render = () => {
     if (chat && messages) {
       const otherMember = chat?.members.find(member => member._id !== user._id);
@@ -65,7 +88,7 @@ const ChatArea = () => {
             </div>
             <div className="ca-body">
               {
-                messages.map((msg, index) => {
+                transformedMessages.map((msg, index) => {
                   if (msg.sender === user._id) {
                     return (
                       <MessageSelf key={index} message={msg} />
@@ -95,7 +118,7 @@ const ChatArea = () => {
           </div>
           <div className="ca-body">
             {
-              messages.map((msg, index) => {
+              transformedMessages.map((msg, index) => {
                 if (msg.sender === user._id) {
                   return (
                     <MessageSelf key={index} message={msg} />

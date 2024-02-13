@@ -1,7 +1,7 @@
 import { apiSlice } from "../../app/api/apiSlice";
 import { setChats, setSelectedChat } from "./chatSlice";
 
-export const authApiSlice = apiSlice.injectEndpoints({
+export const chatApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getChats: builder.query({
             query: () => ({
@@ -45,4 +45,4 @@ export const authApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const {useGetChatsQuery , useCreateChatMutation, useGetChatQuery} = authApiSlice
+export const {useGetChatsQuery , useCreateChatMutation, useGetChatQuery} = chatApiSlice
