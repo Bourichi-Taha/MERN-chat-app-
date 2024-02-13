@@ -49,7 +49,29 @@ const createUser = asyncHandler(async (req,res) => {
 // @route PATCH /users
 // @access Private
 const updateUser = asyncHandler(async (req,res) => {
+    const {username,password,avatarId} = req.body;
 
+    //confirm inputs
+    if(!username || !password) return res.status(400).json({message: 'All fields are required!'});
+
+    //hash password
+    const hashedPassword = await bcrypt.hash(password,10);
+
+    let userObject;
+    if (avatarId) {
+        userObject = {username,password:hashedPassword,avatarId};
+    } else {
+        userObject = {username,password:hashedPassword};
+    }
+
+    //create and store user
+    const user = await User.create(userObject);
+
+    if(user) {
+        return res.status(201).json({message: `User ${username} updated!`});
+    }else{
+        return res.status(400).json({message: 'Invalid user data received. Please try again!'});
+    }
 })
 
 // @ desc delete a user

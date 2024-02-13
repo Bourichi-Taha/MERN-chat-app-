@@ -7,12 +7,24 @@ const asyncHandler = require('express-async-handler');
 // @access Private
 const getAllChats = asyncHandler(async (req, res) => {
     const user = req.user;
-    const chats = await Chat.find({ members: user._id });
+    const chats = await Chat.find({ members: user._id }).populate('members');
 
     if (!chats) return res.status(400).json({ message: 'NO chats found!' });
 
     return res.status(200).json(chats);
-})
+});
+// @ desc Get single chats
+// @route GET /chat/:id
+// @access Private
+const getSingleChat = asyncHandler(async (req, res) => {
+    const user = req.user;
+    const chatId = req.params.id;
+    const chat = await Chat.findOne({ members: user._id,_id:chatId }).populate('members');
+
+    if (!chat) return res.status(400).json({ message: 'NO chats found!' });
+
+    return res.status(200).json(chat);
+});
 
 // @ desc create a chat
 // @route POST /chats
@@ -50,4 +62,4 @@ const deleteChat = asyncHandler(async (req, res) => {
 
 })
 
-module.exports = { createChat, updateChat, deleteChat, getAllChats }
+module.exports = { createChat, updateChat, deleteChat, getAllChats, getSingleChat}

@@ -16,11 +16,9 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
     let result = await baseQuery(args,api,extraOptions);
-    if (result?.error?.originalStatus === 403) {
-        console.log('sending refresh token');
+    if (result?.error?.status === 403) {
         // send refresh token to get a valid access one
         const refreshResult = await baseQuery('/auth/refresh',api,extraOptions);
-        console.log(refreshResult);
         if (refreshResult?.data) {
             const user = api.getState().auth.user;
             //store the new token
@@ -37,6 +35,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['User'],
+    tagTypes: ['User','Chat','Message'],
     endpoints: builder => ({})
 })

@@ -11,10 +11,12 @@ const messageSchema = mongoose.Schema({
     },
     upload : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "Upload"
+        ref : "Upload",
+        default:null
     },
     content : {
         type : String,
+        default:null
     },
     type : {
         type : String,

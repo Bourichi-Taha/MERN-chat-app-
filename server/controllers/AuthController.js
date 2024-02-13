@@ -56,7 +56,7 @@ const login = asyncHandler(async (req,res) => {
         maxAge: 7*24*60*60*1000//set to match refresh token life 1Day
     });
 
-    return res.status(200).json({accessToken});
+    return res.status(200).json({accessToken,foundUser});
 });
 
 // @desc Refresh
@@ -92,7 +92,7 @@ const refresh = async (req,res) => {
                 {expiresIn: '10s'}
             );
 
-            return res.status(200).json({accessToken});
+            return res.status(200).json({accessToken,foundUser});
         })
 
     )

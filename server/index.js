@@ -29,10 +29,13 @@ const authRoute = require("./routes/AuthRoutes");
 const userRoute = require('./routes/UserRoutes');
 const uploadRoute = require('./routes/UploadRoutes');
 const chatRoute = require('./routes/ChatRoutes');
+const messageRoute = require('./routes/MessageRoutes');
 //using routes in the app
 app.use("/api/v1/auth",authRoute);
 app.use("/api/v1/user",userRoute);
 app.use("/api/v1/chat",chatRoute);
+app.use("/api/v1/upload",uploadRoute);
+app.use("/api/v1/message",messageRoute);
 
 
 //not found route

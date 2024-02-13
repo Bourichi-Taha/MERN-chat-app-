@@ -32,8 +32,8 @@ const Login = () => {
         e.preventDefault();
         try {
             const res = await login({ username, password }).unwrap();
-            const { accessToken } = res;
-            dispatch(setCredentials({ accessToken }));
+            const { accessToken,foundUser } = res;
+            dispatch(setCredentials({ accessToken,foundUser }));
             setUsername('');
             setPassword('');
             navigate('/home');

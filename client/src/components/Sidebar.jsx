@@ -13,8 +13,9 @@ import { IconButton, useMediaQuery } from '@mui/material';
 import ConversationAvatar from './ConversationAvatar';
 import { useNavigate } from 'react-router-dom';
 import { useSendLogoutMutation } from '../features/auth/authApiSlice';
+import { useGetChatsQuery } from '../features/chat/chatApiSlice';
 
-const Sidebar = () => {
+const Sidebar = ({chats}) => {
 
     const navigate = useNavigate();
     const [sendLogout, { isSuccess }] = useSendLogoutMutation();
@@ -63,10 +64,13 @@ const Sidebar = () => {
                 <input placeholder='Search here ...' type="text" className="sb-search-input" />
             </div>
             <div className="sb-conversations">
-                <ConversationAvatar />
-                <ConversationAvatar />
-                <ConversationAvatar />
-                <ConversationAvatar />
+                {
+                       chats.map((chat,index)=>{
+                        return(
+                            <ConversationAvatar key={index} chat={chat} />
+                        )
+                       }) 
+                }
             </div>
         </div>
     )

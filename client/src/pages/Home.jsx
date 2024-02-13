@@ -1,16 +1,16 @@
 import {  Outlet } from 'react-router-dom';
 import "../assets/css/style.css"
 import Sidebar from '../components/Sidebar';
-import { useChatQuery } from '../features/auth/authApiSlice';
+import { useGetChatsQuery } from '../features/chat/chatApiSlice';
 
 const Home = () => {
 
-    const { data } = useChatQuery();
-    console.log(data)
+    const { data,isLoading } = useGetChatsQuery();
+
   return (
     <div className='home-container'>
       
-      <Sidebar />
+      {!isLoading && <Sidebar chats={data} /> }
       
       <Outlet/>
     </div>

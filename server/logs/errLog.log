@@ -16,3 +16,9 @@
 20240211	04:10:22	e96f50d2-3eed-422c-a9c8-931a4ed7f0ea	MulterError: Unexpected field	POST	/api/v1/upload	undefined
 20240211	04:46:09	a60547b4-df87-471a-a8a6-c1b6054bfa30	ReferenceError: chatname is not defined	POST	/api/v1/chat	undefined
 20240211	04:49:00	a1779c05-af10-4d18-8dc7-ea6b8f1e485c	ReferenceError: chatname is not defined	POST	/api/v1/chat	undefined
+20240211	05:51:55	4c48b1d1-43f1-4edf-bb42-582625516fcc	ReferenceError: itemId is not defined	POST	/api/v1/message	undefined
+20240212	22:56:57	e686eda7-d1ab-4692-aadc-1bac158ffc32	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "chat" for model "Message"	GET	/api/v1/message/[object%20Object]	http://localhost:3000
+20240212	23:05:08	d18344c7-e063-441b-a7e2-0c03b5947a59	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "chat" for model "Message"	GET	/api/v1/message/[object%20Object]	http://localhost:3000
+20240212	23:05:12	9c4332b3-e858-4246-8e4c-4b70b509abe5	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "chat" for model "Message"	GET	/api/v1/message/[object%20Object]	http://localhost:3000
+20240212	23:51:36	c6df0f43-d316-4a2a-a364-6b2079741295	CastError: Cast to ObjectId failed for value "[object Object]" (type string) at path "_id" for model "Chat"	GET	/api/v1/chat/[object%20Object]	http://localhost:3000
+20240213	00:58:33	998cbf26-4d1b-4cf2-9b0b-fa001b3031cf	TypeError: Cannot read properties of null (reading '_id')	POST	/api/v1/message	http://localhost:3000
