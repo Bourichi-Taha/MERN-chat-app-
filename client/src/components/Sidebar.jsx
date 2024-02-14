@@ -14,6 +14,8 @@ import ConversationAvatar from './ConversationAvatar';
 import { useNavigate } from 'react-router-dom';
 import { useSendLogoutMutation } from '../features/auth/authApiSlice';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import AddAlertIcon from '@mui/icons-material/AddAlert';
+import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 const Sidebar = ({chats}) => {
 
     const navigate = useNavigate();
@@ -29,7 +31,7 @@ const Sidebar = ({chats}) => {
     return (
         <div className='sidebar-container'>
             <div className="sb-header">
-                <IconButton onClick={() => { navigate("/") }}>
+                <IconButton onClick={() => { navigate("profile") }}>
                     <AccountCircleOutlinedIcon />
                 </IconButton>
                 <div className="sb-header-icons">
@@ -38,6 +40,9 @@ const Sidebar = ({chats}) => {
                             <QuestionAnswerIcon />
                         </IconButton>
                     }
+                    <IconButton onClick={() => { navigate("requests") }}>
+                        <AddAlertIcon />
+                    </IconButton>
                     <IconButton onClick={() => { navigate("look-users") }}>
                         <PersonSearchIcon />
                     </IconButton>

@@ -4,6 +4,8 @@ const verifyJWT = require('../middleware/verifyJWT');
 
 router.route('/')
     .post(userController.createUser);
+router.use(verifyJWT).route('/:id')
+    .get(userController.getSingleUser)
 router.use(verifyJWT).route('/')
     .get(userController.getAllUsers)
     .patch(userController.updateUser)

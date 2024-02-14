@@ -13,6 +13,15 @@ const getAllUsers = asyncHandler(async (req, res) => {
     const finalUsers = users.filter((user) => user._id.toString() !== loggedUser._id);
     return res.json(finalUsers);
 })
+// @ desc Get single user
+// @route GET /user/:id
+// @access Private
+const getSingleUser = asyncHandler(async (req, res) => {
+    const id = req.params.id;
+    const user = await User.findById(id).select('username _id').lean();
+    if (!user) return res.status(400).json({ message: 'NO user found!' });
+    return res.json(user);
+})
 
 // @ desc create a user
 // @route POST /users
@@ -107,14 +116,13 @@ const acceptUserRequest = asyncHandler(async (req, res) => {
 
     try {
         const updatedFriend = await User.findOneAndUpdate(
-            { _id: userId },
-            { $addToSet: { friends: friendId } },
-            { $pull: { requests: friendId } },
+            { _id: friendId },
+            { $addToSet: { friends: userId },$pull: { requests: userId } },
             { new: true }
         ).lean().exec();
         const updatedSelf = await User.findOneAndUpdate(
-            { _id: friendId },
-            { $addToSet: { friends: userId } },
+            { _id: userId },
+            { $addToSet: { friends: friendId },$pull: { requests: friendId } },
             { new: true }
         ).lean().exec();
 
@@ -217,4 +225,4 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 })
 
-module.exports = { createUser, updateUser, deleteUser, getAllUsers, acceptUserRequest, sendUserRequest, refuseUserRequest, cancelUserRequest, unfriendUser }
+module.exports = { createUser, updateUser, deleteUser, getSingleUser, getAllUsers, acceptUserRequest, sendUserRequest, refuseUserRequest, cancelUserRequest, unfriendUser }
