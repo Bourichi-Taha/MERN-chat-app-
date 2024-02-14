@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentToken } from './authSlice';
 import { useRefreshMutation } from './authApiSlice';
 import { Link, Outlet } from 'react-router-dom';
+import SkeletonPAge from '../../pages/SkeletonPAge';
 
 const PersistLogin = () => {
 
@@ -38,7 +39,7 @@ const PersistLogin = () => {
         content = <Outlet />
 
     }else if(isLoading){
-        content = <p>loading ...</p>
+        content = <SkeletonPAge/>
     }else if(isError){
         content = (
             <p>{error.data?.message}<Link to={"/login"}>please login again</Link></p>

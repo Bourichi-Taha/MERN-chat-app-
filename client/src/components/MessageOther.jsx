@@ -1,16 +1,24 @@
 import React from 'react'
 import '../assets/css/style.css';
 import { baseUrl } from '../app/api/apiSlice';
+import { useGetSingleUserQuery } from '../features/user/userApiSlice';
+import Avatar from '@mui/material/Avatar';
 
 
 
 const MessageOther = ({ message }) => {
+  const { data: user, isLoading } = useGetSingleUserQuery(message.sender);
   const render = () => {
     if (message.type === 'text') {
       return (
         <div className="message-other-container">
           <div className="mo-container">
-            <p className="con-icon">O</p>
+            <Avatar
+              alt={user?.username}
+              src={baseUrl + '/' + user?.avatar?.path}
+              className="con-icon"
+
+            />
             <div className="mo-content">
               <p className="mo-lastMessage">{message.content}</p>
               <p className="self-timeStamp">12:00am</p>
@@ -22,7 +30,12 @@ const MessageOther = ({ message }) => {
     return (
       <div className="message-other-container">
         <div className="mo-container">
-          <p className="con-icon">O</p>
+          <Avatar
+            alt={user?.username}
+            src={baseUrl + '/' + user?.avatar?.path}
+            className="con-icon"
+
+          />
           <div className="mo-content">
             {Array.isArray(message.upload) ?
               <div className='img-pack' style={{ height: 'auto', width: '100%', display: 'flex', flexWrap: 'wrap', rowGap: 10, columnGap: 10 }}>

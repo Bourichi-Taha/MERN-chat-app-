@@ -7,7 +7,12 @@ const asyncHandler = require('express-async-handler');
 // @access Private
 const getAllChats = asyncHandler(async (req, res) => {
     const user = req.user;
-    const chats = await Chat.find({ members: user._id }).populate('members');
+    const chats = await Chat.find({ members: user._id }).populate({
+        path: 'members',
+        populate: {
+            path: 'avatar'
+        }
+    });
 
     if (!chats) return res.status(400).json({ message: 'NO chats found!' });
 
@@ -19,7 +24,12 @@ const getAllChats = asyncHandler(async (req, res) => {
 const getSingleChat = asyncHandler(async (req, res) => {
     const user = req.user;
     const chatId = req.params.id;
-    const chat = await Chat.findOne({ members: user._id,_id:chatId }).populate('members');
+    const chat = await Chat.findOne({ members: user._id, _id: chatId }).populate({
+        path: 'members',
+        populate: {
+            path: 'avatar'
+        }
+    });
 
     if (!chat) return res.status(400).json({ message: 'NO chats found!' });
 
@@ -35,7 +45,7 @@ const createChat = asyncHandler(async (req, res) => {
     if (!isGroupChat) {
         //confirm inputs
         if (!members || members.length < 2) return res.status(400).json({ message: 'All fields are required!' });
-        const duplicate = await Chat.findOne({ members:{$all : members}}).lean().exec();
+        const duplicate = await Chat.findOne({ members: { $all: members, $size: members.length } }).lean().exec();
         if (duplicate) return res.status(200).json(duplicate);
     }
     else if (!name || !members || members.length < 2) return res.status(400).json({ message: 'All fields are required!' });
@@ -62,4 +72,4 @@ const deleteChat = asyncHandler(async (req, res) => {
 
 })
 
-module.exports = { createChat, updateChat, deleteChat, getAllChats, getSingleChat}
+module.exports = { createChat, updateChat, deleteChat, getAllChats, getSingleChat }

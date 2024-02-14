@@ -13,7 +13,7 @@ const login = asyncHandler(async (req,res) => {
         return res.status(400).json({message:'All fields are required!'});
     }
 
-    const foundUser = await User.findOne({username}).exec();
+    const foundUser = await User.findOne({username}).populate('avatar').exec();
 
     if (!foundUser || !foundUser.active) {
         return res.status(401).json({message:'Unauthorized!'});
@@ -77,7 +77,7 @@ const refresh = async (req,res) => {
         asyncHandler(async (err,decoded) => {
             if(err) return res.status(403).json({message: 'Forbidden!'});
             console.log(decoded)
-            const foundUser = await User.findOne({username: decoded.UserInfo.username}).exec();
+            const foundUser = await User.findOne({username: decoded.UserInfo.username}).populate('avatar').exec();
 
             if(!foundUser) return res.status(401).json({message: 'Unauthorized!2'});
 

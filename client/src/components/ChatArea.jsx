@@ -12,11 +12,17 @@ import { useCreateMessageMutation, useGetMessagesQuery } from '../features/messa
 import { useParams } from 'react-router-dom';
 import { useGetChatQuery } from '../features/chat/chatApiSlice';
 import UploadModal from './UploadModal';
+import Avatar from '@mui/material/Avatar';
+import { baseUrl } from '../app/api/apiSlice';
+
 const ChatArea = () => {
   const chatId = useParams().id;
   const { data: chat } = useGetChatQuery({ chatId });
   const user = useSelector(selectCurrentUser);
-  const { data, isLoading } = useGetMessagesQuery(chatId);
+  const { data, isLoading } = useGetMessagesQuery(chatId,{
+    pollingInterval: 1000,
+    skipPollingIfUnfocused: true,
+  });
   const [createMessage] = useCreateMessageMutation();
   const [messages, setMessages] = useState([]);
   const [open, setOpen] = useState(false);
@@ -43,7 +49,7 @@ const ChatArea = () => {
         <IconButton onClick={sendMessage}>
           <SendIcon />
         </IconButton>
-        <IconButton onClick={(e)=>setOpen(true)}>
+        <IconButton onClick={(e) => setOpen(true)}>
           <AttachFileIcon />
         </IconButton>
         <UploadModal open={open} setOpen={setOpen} chatId={chatId} />
@@ -52,7 +58,7 @@ const ChatArea = () => {
   }
   const transformedMessages = messages.reduce((acc, message) => {
     const lastMessage = acc[acc.length - 1];
-  
+
     if (message.type === 'media') {
       if (lastMessage && lastMessage.type === 'media' && lastMessage.sender === message.sender) {
         // If the last message and the current message are both media messages from the same sender,
@@ -66,10 +72,10 @@ const ChatArea = () => {
       // For text messages, simply push them to the transformed array
       acc.push(message);
     }
-  
+
     return acc;
   }, []);
-  
+
   const render = () => {
     if (chat && messages) {
       const otherMember = chat?.members.find(member => member._id !== user._id);
@@ -77,7 +83,11 @@ const ChatArea = () => {
         return (
           <div className='chatArea-container'>
             <div className="ca-header">
-              <p className="con-icon">{chat.name[0]}</p>
+              <Avatar
+                alt={chat.name}
+                src={baseUrl + '/' + chat?.chatUpload?.path}
+                className="con-icon"
+              />
               <div className="ca-header-text">
                 <p className="con-title">{chat.name}</p>
                 <p className="con-lastMessage">Online</p>
@@ -107,7 +117,12 @@ const ChatArea = () => {
       return (
         <div className='chatArea-container'>
           <div className="ca-header">
-            <p className="con-icon">{otherMember.username[0]}</p>
+            <Avatar
+              alt={otherMember.username}
+              src={baseUrl + '/' + otherMember?.avatar?.path}
+              className="con-icon"
+
+            />
             <div className="ca-header-text">
               <p className="con-title">{otherMember.username}</p>
               <p className="con-lastMessage">Online</p>

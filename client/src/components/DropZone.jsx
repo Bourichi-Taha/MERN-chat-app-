@@ -34,13 +34,13 @@ const img = {
 
 
 export default function DropZone(props) {
-    const {setFilesForParent} = props;
+    const {setFilesForParent ,single=false,done=false} = props;
   const [files, setFiles] = useState([]);
   const {getRootProps, getInputProps, acceptedFiles} = useDropzone({
     accept: {
       'image/*': []
     },
-    maxFiles:4,
+    maxFiles:single ? 1 : 4,
     onDrop: acceptedFiles => {
       setFiles(acceptedFiles.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
@@ -67,15 +67,24 @@ export default function DropZone(props) {
     return () => files.forEach(file => URL.revokeObjectURL(file.preview));
   }, [files]);
   useEffect(() => {
-    setFilesForParent(acceptedFiles)
-  }, [acceptedFiles,setFilesForParent]);
+    if (single) {
+      setFilesForParent(acceptedFiles[0])
+    }else{
+      setFilesForParent(acceptedFiles)
+    }
+  }, [acceptedFiles,setFilesForParent,single]);
+  useEffect(() => {
+    if (done) {
+      setFiles([])
+    }
+  }, [done,setFiles]);
 
   return (
     <section className="container">
-      <div {...getRootProps({className: 'dropzone'})}>
+      <div style={{border:'1px dashed #333',padding:30,background:'lightgrey'}} {...getRootProps({className: 'dropzone'})}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
-        <em>(4 files are the maximum number of files you can drop here)</em>
+        <em>({single ? '1' : "4"} file{single?' is':'s are'} the maximum number of files you can drop here)</em>
       </div>
       <aside style={thumbsContainer}>
         {thumbs}

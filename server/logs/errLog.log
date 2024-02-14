@@ -33,3 +33,4 @@
 20240214	00:33:59	e40f601d-ba16-4472-9abf-ce01b9719feb	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"	GET	/api/v1/user/undefined	http://localhost:3000
 20240214	00:34:13	249a6d64-6c19-425f-84c5-06f5b0373e7e	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"	GET	/api/v1/user/undefined	http://localhost:3000
 20240214	00:34:40	66bfe9b0-4b29-489d-9900-d2dd23ce0349	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"	GET	/api/v1/user/undefined	http://localhost:3000
+20240214	04:48:12	b0d6c5cc-8267-42ac-a03d-0fd22e410e1b	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"	GET	/api/v1/user/undefined	http://localhost:3000

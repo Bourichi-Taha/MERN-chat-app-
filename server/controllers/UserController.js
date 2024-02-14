@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 // @route GET /user
 // @access Private
 const getAllUsers = asyncHandler(async (req, res) => {
-    const users = await User.find().select('-password').lean();
+    const users = await User.find().select('-password').populate('avatar').lean();
     if (!users) return res.status(400).json({ message: 'NO users found!' });
     const loggedUser = req.user;
     const finalUsers = users.filter((user) => user._id.toString() !== loggedUser._id);
@@ -18,7 +18,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 // @access Private
 const getSingleUser = asyncHandler(async (req, res) => {
     const id = req.params.id;
-    const user = await User.findById(id).select('username _id').lean();
+    const user = await User.findById(id).select('username _id avatar').populate('avatar').lean();
     if (!user) return res.status(400).json({ message: 'NO user found!' });
     return res.json(user);
 })
@@ -59,25 +59,45 @@ const createUser = asyncHandler(async (req, res) => {
 // @access Private
 const updateUser = asyncHandler(async (req, res) => {
     const { username, password, avatarId } = req.body;
-
+    const loggedUser = req.user;
+    let hashedPassword;
     //confirm inputs
-    if (!username || !password) return res.status(400).json({ message: 'All fields are required!' });
-
-    //hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
+    if (!username) return res.status(400).json({ message: 'All fields are required!' });
+    if (password) {
+        //hash password
+        hashedPassword = await bcrypt.hash(password, 10);
+    }
+    if (username) {
+        const usernameTaken = await User.findOne({ username }).lean();
+        if (usernameTaken._id.toString() !== loggedUser._id) {
+            return res.status(400).json({ message: 'Username taken!' });
+        }
+    }
     let userObject;
-    if (avatarId) {
-        userObject = { username, password: hashedPassword, avatarId };
-    } else {
-        userObject = { username, password: hashedPassword };
+    if (username) {
+        userObject = {  username };
+
+        if (avatarId) {
+            userObject = {  avatar:avatarId,username };
+            if (hashedPassword) {
+                userObject = {avatar:avatarId,password:hashedPassword,username}
+            }
+        }else{
+            if (hashedPassword) {
+                userObject = {password:hashedPassword,username}
+            }
+        }
     }
 
-    //create and store user
-    const user = await User.create(userObject);
+    //find and update user
+    const user = await User.findOneAndUpdate(
+        {_id:loggedUser._id},
+        userObject,
+        { new: true }
+    ).lean().exec();;
 
     if (user) {
-        return res.status(201).json({ message: `User ${username} updated!` });
+        return res.status(200).json({ message: `User ${username} updated!` });
     } else {
         return res.status(400).json({ message: 'Invalid user data received. Please try again!' });
     }
@@ -117,12 +137,12 @@ const acceptUserRequest = asyncHandler(async (req, res) => {
     try {
         const updatedFriend = await User.findOneAndUpdate(
             { _id: friendId },
-            { $addToSet: { friends: userId },$pull: { requests: userId } },
+            { $addToSet: { friends: userId }, $pull: { requests: userId } },
             { new: true }
         ).lean().exec();
         const updatedSelf = await User.findOneAndUpdate(
             { _id: userId },
-            { $addToSet: { friends: friendId },$pull: { requests: friendId } },
+            { $addToSet: { friends: friendId }, $pull: { requests: friendId } },
             { new: true }
         ).lean().exec();
 

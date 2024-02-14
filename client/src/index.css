@@ -14,12 +14,15 @@ body{
     --icon-text-color:white;
     --message-other-color: #d9d9d9;
     --message-self-color:aliceblue;
+    --bg-element-conv:#c6c6c6;
 }
 body.dark{
     --bg-global-color: #7b7b7b;
     --bg-container-scope: #606060;
     --bg-element-scope: #2d3941;
     --text-color:whitesmoke;
+    --bg-element-conv:#535353;
+
 }
 body {
 

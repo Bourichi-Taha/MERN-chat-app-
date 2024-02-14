@@ -32,6 +32,21 @@ export const userApiSlice = apiSlice.injectEndpoints({
             },
             invalidatesTags:['User']
         }),
+        updateUser: builder.mutation({
+            query: (body) => ({
+                url: `/user`,
+                method: 'PATCH',
+                body:{...body}
+            }),
+            async onQueryStarted(args, {dispatch, queryFulfilled}) {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            invalidatesTags:['User']
+        }),
         acceptRequest: builder.mutation({
             query: (userId) => ({
                 url: `/user/accept/${userId}`,
@@ -107,4 +122,4 @@ export const userApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const {useGetUsersQuery, useGetSingleUserQuery, useAcceptRequestMutation, useSendRequestMutation, useRefuseRequestMutation, useCancelRequestMutation, useUnfriendUserMutation } = userApiSlice
+export const {useGetUsersQuery, useUpdateUserMutation, useGetSingleUserQuery, useAcceptRequestMutation, useSendRequestMutation, useRefuseRequestMutation, useCancelRequestMutation, useUnfriendUserMutation } = userApiSlice

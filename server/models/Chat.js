@@ -24,6 +24,11 @@ const chatSchema = mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "User",
         default: null
+    },
+    chatUpload : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Upload",
+        default: null
     }
 },
 {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import "../assets/css/style.css";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
@@ -15,18 +15,25 @@ import { useNavigate } from 'react-router-dom';
 import { useSendLogoutMutation } from '../features/auth/authApiSlice';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import AddAlertIcon from '@mui/icons-material/AddAlert';
-import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
+import useLocalStorage from '../hooks/useLocalStorage';
 const Sidebar = ({chats}) => {
 
     const navigate = useNavigate();
     const [sendLogout, { isSuccess }] = useSendLogoutMutation();
-    const [isDark, setIsDark] = useState(false);
+    const [isDark, setIsDark] = useLocalStorage('isDark',false);
     const matches = useMediaQuery('(max-width:680px)');
     useEffect(() => {
         if (isSuccess) {
             navigate("/login");
         }
     }, [isSuccess, navigate])
+    useEffect(() => {
+        if (isDark) {
+            document.querySelector('body').classList.add('dark');
+        } else {
+            document.querySelector('body').classList.remove('dark');
+        }
+    }, [isDark])
     const clickHandler = () => sendLogout()
     return (
         <div className='sidebar-container'>
@@ -55,7 +62,7 @@ const Sidebar = ({chats}) => {
                     <IconButton onClick={() => { navigate("addGroupe") }}>
                         <AddCircleOutlineOutlinedIcon />
                     </IconButton >
-                    <IconButton onClick={() => { document.querySelector('body').classList.toggle('dark'); setIsDark(prev => !prev) }}>
+                    <IconButton onClick={() => { setIsDark(prev => !prev) }}>
                         {isDark ? <LightModeIcon /> : <DarkModeOutlinedIcon />}
                     </IconButton>
                     <IconButton onClick={clickHandler}>
