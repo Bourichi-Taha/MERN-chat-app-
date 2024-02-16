@@ -18,7 +18,9 @@ import Requests from "./components/Requests";
 import Profile from "./components/Profile";
 
 
+
 function App() {
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -31,7 +33,7 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>
 
-            <Route path="/" element={<Home />}>
+            <Route path="/" element={<Home  />}>
               <Route path="home" element={<Welcome />} />
               <Route path="chat/:id" element={<ChatArea />} />
               <Route path="addGroupe" element={<CreateGroups />} />
@@ -39,7 +41,7 @@ function App() {
               <Route path="requests" element={<Requests />} />
               <Route path="look-users" element={<AddFriends />} />
               <Route path="groups" element={<AvailableGroups />} />
-              <Route path="conversations" element={<Conversations />} />
+              <Route path="conversations" element={<Conversations  />} />
               <Route path="profile" element={<Profile />} />
 
             </Route>

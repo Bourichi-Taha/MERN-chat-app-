@@ -11,9 +11,11 @@ import PersonAddDisabledIcon from '@mui/icons-material/PersonAddDisabled';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { useNavigate } from 'react-router-dom';
 import { useCreateChatMutation } from '../../features/chat/chatApiSlice';
+import { baseUrl } from '../../app/api/apiSlice';
+import Avatar from '@mui/material/Avatar';
 
 const FriendItem = ({ user }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const loggedUser = useSelector(selectCurrentUser);
     const isRequested = user.requests.includes(loggedUser._id);
     const isFriend = user.friends.includes(loggedUser._id);
@@ -35,7 +37,7 @@ const FriendItem = ({ user }) => {
     }
     const handleChatStart = async (e) => {
         e.preventDefault();
-        const res = await createChat({members:[user._id,loggedUser._id],isGroupChat:false});
+        const res = await createChat({ members: [user._id, loggedUser._id], isGroupChat: false });
         if (res.data && res.data._id) {
             navigate(`/chat/${res.data._id}`);
         }
@@ -43,7 +45,11 @@ const FriendItem = ({ user }) => {
     return (
         <li className="ou-list-item">
             <div className="ou-list-item-left">
-                <p className="ou-icon">{user.username[0]}</p>
+                <Avatar
+                    alt={user.username}
+                    src={baseUrl + '/' + user?.avatar?.path}
+                    className="ou-icon"
+                />
                 <p className="ou-title">{user.username}</p>
             </div>
             <div className="ou-list-item-right">
@@ -51,7 +57,7 @@ const FriendItem = ({ user }) => {
                     !isFriend ? (isRequested ?
                         <Tooltip title={'Friend request already sent!'} >
                             <IconButton onClick={handleCancelRequest}>
-                                <PersonRemoveIcon color='error'/>
+                                <PersonRemoveIcon color='error' />
                             </IconButton>
                         </Tooltip>
                         :

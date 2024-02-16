@@ -18,6 +18,20 @@ export const userApiSlice = apiSlice.injectEndpoints({
             },
             providesTags:['User']
         }),
+        getUsersFriends: builder.query({
+            query: () => ({
+                url: `/user/friends/all`,
+                method: 'GET',
+            }),
+            async onQueryStarted(args, {dispatch, queryFulfilled}) {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            providesTags:['User']
+        }),
         sendRequest: builder.mutation({
             query: (userId) => ({
                 url: `/user/request/${userId}`,
@@ -122,4 +136,4 @@ export const userApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const {useGetUsersQuery, useUpdateUserMutation, useGetSingleUserQuery, useAcceptRequestMutation, useSendRequestMutation, useRefuseRequestMutation, useCancelRequestMutation, useUnfriendUserMutation } = userApiSlice
+export const {useGetUsersQuery,useGetUsersFriendsQuery, useUpdateUserMutation, useGetSingleUserQuery, useAcceptRequestMutation, useSendRequestMutation, useRefuseRequestMutation, useCancelRequestMutation, useUnfriendUserMutation } = userApiSlice

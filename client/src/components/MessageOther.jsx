@@ -7,7 +7,7 @@ import Avatar from '@mui/material/Avatar';
 
 
 const MessageOther = ({ message }) => {
-  const { data: user, isLoading } = useGetSingleUserQuery(message.sender);
+  const { data: user } = useGetSingleUserQuery(message.sender);
   const render = () => {
     if (message.type === 'text') {
       return (
@@ -21,7 +21,7 @@ const MessageOther = ({ message }) => {
             />
             <div className="mo-content">
               <p className="mo-lastMessage">{message.content}</p>
-              <p className="self-timeStamp">12:00am</p>
+              <p className="self-timeStamp">{message.messageAgo}</p>
             </div>
           </div>
         </div>
@@ -51,7 +51,7 @@ const MessageOther = ({ message }) => {
               <img alt={message.upload.filename} src={`${baseUrl}/${message.upload.path}`} style={{ height: 80, width: 80, objectFit: 'contain' }} />
             }
 
-            <p className="self-timeStamp">12:00am</p>
+            <p className="self-timeStamp">{message.messageAgo}</p>
           </div>
         </div>
       </div>

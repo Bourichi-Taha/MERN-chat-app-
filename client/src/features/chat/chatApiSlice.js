@@ -18,6 +18,20 @@ export const chatApiSlice = apiSlice.injectEndpoints({
             },
             providesTags:['Chat']
         }),
+        getGroups: builder.query({
+            query: () => ({
+                url: '/chat/groups',
+                method: 'GET',
+            }),
+            async onQueryStarted(args, {dispatch, queryFulfilled}) {
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            providesTags:['Chat']
+        }),
         getChat: builder.query({
             query: ({chatId}) => ({
                 url: `/chat/${chatId}`,
@@ -42,7 +56,14 @@ export const chatApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags:['Chat']
         }),
+        leaveGroup: builder.mutation({
+            query: (id) => ({
+                url: `/chat/${id}`,
+                method: 'PATCH',
+            }),
+            invalidatesTags:['Chat']
+        }),
     })
 })
 
-export const {useGetChatsQuery , useCreateChatMutation, useGetChatQuery} = chatApiSlice
+export const {useGetChatsQuery , useCreateChatMutation, useGetChatQuery,useGetGroupsQuery,useLeaveGroupMutation} = chatApiSlice

@@ -4,9 +4,12 @@ import { IconButton } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import ConversationAvatar from './ConversationAvatar';
 import logo from "../assets/images/logo.png";
+import { useGetChatsQuery } from '../features/chat/chatApiSlice';
 
 
 const Conversations = () => {
+    const { data,isLoading } = useGetChatsQuery();
+
     return (
         <div className="online-users-container">
             <div className=" online-users-header">
@@ -20,10 +23,12 @@ const Conversations = () => {
                 <input type="text" placeholder='Search here ...' className='sb-search-input' />
             </div>
             <div className="con-sb-conversations">
-                <ConversationAvatar />
-                <ConversationAvatar />
-                <ConversationAvatar />
-                <ConversationAvatar />
+                {!isLoading && data.map((chat, index) => {
+                    return (
+                        <ConversationAvatar key={index} chat={chat} />
+                    )
+                })
+                }
             </div>
         </div>
     )

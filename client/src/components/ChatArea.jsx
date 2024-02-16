@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import "../assets/css/style.css";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import SendIcon from '@mui/icons-material/Send';
@@ -8,23 +8,20 @@ import MessageOther from './MessageOther';
 import MessageSelf from './MessageSelf';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../features/auth/authSlice';
-import { useCreateMessageMutation, useGetMessagesQuery } from '../features/message/messageApiSlice'
+import { useCreateMessageMutation } from '../features/message/messageApiSlice'
 import { useParams } from 'react-router-dom';
 import { useGetChatQuery } from '../features/chat/chatApiSlice';
 import UploadModal from './UploadModal';
 import Avatar from '@mui/material/Avatar';
 import { baseUrl } from '../app/api/apiSlice';
+import useSyncMessagesWithChat from '../hooks/useSyncMessagesWithChat';
 
 const ChatArea = () => {
   const chatId = useParams().id;
   const { data: chat } = useGetChatQuery({ chatId });
   const user = useSelector(selectCurrentUser);
-  const { data, isLoading } = useGetMessagesQuery(chatId,{
-    pollingInterval: 1000,
-    skipPollingIfUnfocused: true,
-  });
+  const messages = useSyncMessagesWithChat({chatId});
   const [createMessage] = useCreateMessageMutation();
-  const [messages, setMessages] = useState([]);
   const [open, setOpen] = useState(false);
   const [currentMessage, setCurrentMessage] = useState('');
   const sendMessage = async (e) => {
@@ -37,11 +34,11 @@ const ChatArea = () => {
     await createMessage(messageObject);
     setCurrentMessage('');
   }
-  useEffect(() => {
-    if (!isLoading) {
-      setMessages(data);
-    }
-  }, [chatId, isLoading, data]);
+  useEffect(()=>{
+    document.querySelectorAll(`.conversation-container`)?.forEach((item) => item.classList.remove('active'));
+    document.querySelector(`.f${chatId}`)?.classList.add('active');
+  },[chatId,messages])
+
   const messageArea = () => {
     return (
       <div className="ca-input-area">
@@ -56,6 +53,7 @@ const ChatArea = () => {
       </div>
     )
   }
+  
   const transformedMessages = messages.reduce((acc, message) => {
     const lastMessage = acc[acc.length - 1];
 

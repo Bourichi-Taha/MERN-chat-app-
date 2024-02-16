@@ -12,6 +12,7 @@ export const messageApiSlice = apiSlice.injectEndpoints({
                 try {
                     const {data} = await queryFulfilled;
                     dispatch(setMessages(data));
+                    
                 } catch (error) {
                     console.log(error)
                 }
@@ -23,8 +24,9 @@ export const messageApiSlice = apiSlice.injectEndpoints({
                 url: '/message',
                 method: 'POST',
                 body: data
+                
             }),
-            invalidatesTags:['Message']
+            invalidatesTags:['Message','Chat']
         }),
     })
 })

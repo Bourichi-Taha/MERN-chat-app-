@@ -16,7 +16,7 @@ const ConversationAvatar = ({ chat }) => {
   const clickHandler = () => {
     dispatch(setSelectedChat(chat));
     document.querySelectorAll(`.conversation-container`)?.forEach((item) => item.classList.remove('active'));
-    document.querySelector(`.f${chat._id}`).classList.add('active');
+    document.querySelector(`.f${chat._id}`)?.classList.add('active');
     navigate(`/chat/${chat._id}`);
   }
   const render = () => {
@@ -29,8 +29,8 @@ const ConversationAvatar = ({ chat }) => {
             className="con-icon"
           />
           <p className="con-title">{chat.name}</p>
-          <p className="con-lastMessage">hiii</p>
-          <p className="con-timeStamp">2h ago</p>
+          <p className="con-lastMessage">{chat.lastMessage}</p>
+          <p className="con-timeStamp">{chat.lastMessageAgo}</p>
         </div>
       )
     }
@@ -43,8 +43,8 @@ const ConversationAvatar = ({ chat }) => {
 
         />
         <p className="con-title">{otherMember.username}</p>
-        <p className="con-lastMessage">hiii</p>
-        <p className="con-timeStamp">2h ago</p>
+        <p className="con-lastMessage">{chat.lastMessage}</p>
+        <p className="con-timeStamp">{chat.lastMessageAgo}</p>
       </div>
     )
   }

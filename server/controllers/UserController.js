@@ -1,26 +1,48 @@
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
+const { Types } = require('mongoose');
 
 
 // @ desc Get all users
 // @route GET /user
 // @access Private
 const getAllUsers = asyncHandler(async (req, res) => {
-    const users = await User.find().select('-password').populate('avatar').lean();
-    if (!users) return res.status(400).json({ message: 'NO users found!' });
-    const loggedUser = req.user;
-    const finalUsers = users.filter((user) => user._id.toString() !== loggedUser._id);
-    return res.json(finalUsers);
+    try {
+        const users = await User.find().select('-password').populate('avatar').lean();
+        if (!users) return res.status(400).json({ message: 'NO users found!' });
+        const loggedUser = req.user;
+        const finalUsers = users.filter((user) => user._id.toString() !== loggedUser._id);
+        return res.json(finalUsers);
+    } catch (error) {
+        console.log(error)
+    }
+})
+// @ desc Get all user'friends
+// @route GET /user/friends/all
+// @access Private
+const getAllUsersFriends = asyncHandler(async (req, res) => {
+    try {
+        
+        const users = await User.find({friends:req.user._id}).select('-password').populate('avatar').exec();
+        if (!users) return res.status(400).json({ message: 'NO users found!' });
+        return res.json(users)
+    } catch (error) {
+        console.log(error)
+    }
 })
 // @ desc Get single user
 // @route GET /user/:id
 // @access Private
 const getSingleUser = asyncHandler(async (req, res) => {
-    const id = req.params.id;
+    try {
+        const id = req.params.id;
     const user = await User.findById(id).select('username _id avatar').populate('avatar').lean();
     if (!user) return res.status(400).json({ message: 'NO user found!' });
     return res.json(user);
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 // @ desc create a user
@@ -32,7 +54,8 @@ const createUser = asyncHandler(async (req, res) => {
     //confirm inputs
     if (!username || !password) return res.status(400).json({ message: 'All fields are required!' });
 
-    //chack duplicate
+    try {
+        //chack duplicate
     const duplicate = await User.findOne({ username }).lean().exec();
 
     if (duplicate) return res.status(409).json({ message: 'User already exist!' });
@@ -50,6 +73,9 @@ const createUser = asyncHandler(async (req, res) => {
     } else {
         return res.status(400).json({ message: 'Invalid user data received. Please try again!' });
     }
+    } catch (error) {
+        console.log(error)
+    }
 
 
 })
@@ -63,51 +89,55 @@ const updateUser = asyncHandler(async (req, res) => {
     let hashedPassword;
     //confirm inputs
     if (!username) return res.status(400).json({ message: 'All fields are required!' });
-    if (password) {
-        //hash password
-        hashedPassword = await bcrypt.hash(password, 10);
-    }
-    if (username) {
-        const usernameTaken = await User.findOne({ username }).lean();
-        if (usernameTaken._id.toString() !== loggedUser._id) {
-            return res.status(400).json({ message: 'Username taken!' });
+    try {
+        if (password) {
+            //hash password
+            hashedPassword = await bcrypt.hash(password, 10);
         }
-    }
-    let userObject;
-    if (username) {
-        userObject = {  username };
-
-        if (avatarId) {
-            userObject = {  avatar:avatarId,username };
-            if (hashedPassword) {
-                userObject = {avatar:avatarId,password:hashedPassword,username}
-            }
-        }else{
-            if (hashedPassword) {
-                userObject = {password:hashedPassword,username}
+        if (username) {
+            const usernameTaken = await User.findOne({ username }).lean();
+            if (usernameTaken._id.toString() !== loggedUser._id) {
+                return res.status(400).json({ message: 'Username taken!' });
             }
         }
-    }
-
-    //find and update user
-    const user = await User.findOneAndUpdate(
-        {_id:loggedUser._id},
-        userObject,
-        { new: true }
-    ).lean().exec();;
-
-    if (user) {
-        return res.status(200).json({ message: `User ${username} updated!` });
-    } else {
-        return res.status(400).json({ message: 'Invalid user data received. Please try again!' });
+        let userObject;
+        if (username) {
+            userObject = {  username };
+    
+            if (avatarId) {
+                userObject = {  avatar:avatarId,username };
+                if (hashedPassword) {
+                    userObject = {avatar:avatarId,password:hashedPassword,username}
+                }
+            }else{
+                if (hashedPassword) {
+                    userObject = {password:hashedPassword,username}
+                }
+            }
+        }
+    
+        //find and update user
+        const user = await User.findOneAndUpdate(
+            {_id:loggedUser._id},
+            userObject,
+            { new: true }
+        ).lean().exec();;
+    
+        if (user) {
+            return res.status(200).json({ message: `User ${username} updated!` });
+        } else {
+            return res.status(400).json({ message: 'Invalid user data received. Please try again!' });
+        }
+    } catch (error) {
+        console.log(error)
     }
 })
 // @ desc send a user request 
 // @route PATCH /user/request/:id
 // @access Private
 const sendUserRequest = asyncHandler(async (req, res) => {
-    const friendId = req.params.id;
-    const userId = req.user._id;
+    const friendId = Types.ObjectId(req.params.id);
+    const userId = Types.ObjectId(req.user._id);
 
     try {
         const updatedFriend = await User.findOneAndUpdate(
@@ -131,8 +161,8 @@ const sendUserRequest = asyncHandler(async (req, res) => {
 // @route PATCH /user/accept/:id
 // @access Private
 const acceptUserRequest = asyncHandler(async (req, res) => {
-    const friendId = req.params.id;
-    const userId = req.user._id;
+    const friendId = Types.ObjectId(req.params.id);
+    const userId = Types.ObjectId(req.user._id);
 
     try {
         const updatedFriend = await User.findOneAndUpdate(
@@ -161,8 +191,8 @@ const acceptUserRequest = asyncHandler(async (req, res) => {
 // @route PATCH /user/refuse/:id
 // @access Private
 const refuseUserRequest = asyncHandler(async (req, res) => {
-    const friendId = req.params.id;
-    const userId = req.user._id;
+    const friendId = Types.ObjectId(req.params.id);
+    const userId = Types.ObjectId(req.user._id);
 
     try {
         const updatedFriend = await User.findOneAndUpdate(
@@ -186,8 +216,8 @@ const refuseUserRequest = asyncHandler(async (req, res) => {
 // @route PATCH /user/refuse/:id
 // @access Private
 const cancelUserRequest = asyncHandler(async (req, res) => {
-    const friendId = req.params.id;
-    const userId = req.user._id;
+    const friendId = Types.ObjectId(req.params.id);
+    const userId = Types.ObjectId(req.user._id);
 
     try {
         const updatedFriend = await User.findOneAndUpdate(
@@ -211,8 +241,8 @@ const cancelUserRequest = asyncHandler(async (req, res) => {
 // @route PATCH /user/unfriend/:id
 // @access Private
 const unfriendUser = asyncHandler(async (req, res) => {
-    const friendId = req.params.id;
-    const userId = req.user._id;
+    const friendId = Types.ObjectId(req.params.id);
+    const userId = Types.ObjectId(req.user._id);
 
     try {
         const updatedFriend = await User.findOneAndUpdate(
@@ -245,4 +275,4 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 })
 
-module.exports = { createUser, updateUser, deleteUser, getSingleUser, getAllUsers, acceptUserRequest, sendUserRequest, refuseUserRequest, cancelUserRequest, unfriendUser }
+module.exports = { createUser,getAllUsersFriends, updateUser, deleteUser, getSingleUser, getAllUsers, acceptUserRequest, sendUserRequest, refuseUserRequest, cancelUserRequest, unfriendUser }

@@ -10,7 +10,7 @@ const MessageSelf = ({ message }) => {
         <div className="message-self-container">
           <div className="messageBox">
             <p>{message.content}</p>
-            <p className="self-timeStamp">12:01am</p>
+            <p className="self-timeStamp">{message.messageAgo}</p>
           </div>
         </div>
       )
@@ -31,7 +31,7 @@ const MessageSelf = ({ message }) => {
             :
             <img alt={message.upload.filename} src={`${baseUrl}/${message.upload.path}`} style={{ height: 80, width: 80, objectFit: 'contain' }} />
           }
-          <p className="self-timeStamp">12:01am</p>
+          <p className="self-timeStamp">{message.messageAgo}</p>
         </div>
       </div>
     )

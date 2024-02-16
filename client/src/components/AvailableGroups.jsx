@@ -3,8 +3,11 @@ import "../assets/css/style.css";
 import { IconButton } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import logo from "../assets/images/logo.png";
+import { useGetGroupsQuery } from '../features/chat/chatApiSlice';
+import GroupItem from './partials/GroupItem';
 
 const AvailableGroups = () => {
+    const {data:groups,isLoading} = useGetGroupsQuery();
     return (
         <div className="online-users-container">
             <div className=" online-users-header">
@@ -18,18 +21,13 @@ const AvailableGroups = () => {
                 <input type="text" placeholder='Search here ...' className='sb-search-input' />
             </div>
             <ul className="ou-list">
-                <li className="ou-list-item">
-                    <p className="ou-icon">H</p>
-                    <p className="ou-title">Hello</p>
-                </li>
-                <li className="ou-list-item">
-                    <p className="ou-icon">H</p>
-                    <p className="ou-title">Hello</p>
-                </li>
-                <li className="ou-list-item">
-                    <p className="ou-icon">H</p>
-                    <p className="ou-title">Hello</p>
-                </li>
+                {
+                    !isLoading && groups.map((grp,index)=>{
+                        return (
+                            <GroupItem group={grp} key={index} />
+                        )
+                    })
+                }
 
             </ul>
         </div>

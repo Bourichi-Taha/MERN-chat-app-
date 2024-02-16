@@ -34,3 +34,5 @@
 20240214	00:34:13	249a6d64-6c19-425f-84c5-06f5b0373e7e	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"	GET	/api/v1/user/undefined	http://localhost:3000
 20240214	00:34:40	66bfe9b0-4b29-489d-9900-d2dd23ce0349	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"	GET	/api/v1/user/undefined	http://localhost:3000
 20240214	04:48:12	b0d6c5cc-8267-42ac-a03d-0fd22e410e1b	CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "User"	GET	/api/v1/user/undefined	http://localhost:3000
+20240216	01:56:44	15106eee-1e39-4d80-b177-e63e22ea33c9	ReferenceError: format is not defined	GET	/api/v1/message/65ceac734dd1bdb1652218f4	http://localhost:3000
+20240216	01:56:45	94a60d0b-5028-4db2-870b-f5404dba8e7a	ReferenceError: format is not defined	GET	/api/v1/message/65ce8fce3b1eaf7dd6109b01	http://localhost:3000
